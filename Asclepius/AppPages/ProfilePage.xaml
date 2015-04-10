@@ -1,0 +1,99 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="Asclepius.AppPages.ProfilePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="True"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit">
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="{StaticResource AppBGBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock Text="ASCLEPIUS" Style="{StaticResource PhoneTextNormalStyle}" Foreground="{StaticResource PhoneTextBoxForegroundBrush}"/>
+            <TextBlock Text="profile" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" Foreground="{StaticResource PhoneTextBoxForegroundBrush}"/>
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <ScrollViewer VerticalAlignment="Top" Height="535" VerticalScrollBarVisibility="Visible">
+                <StackPanel>
+                    <Border BorderThickness="0,0,0,1" BorderBrush="#FFC8C8C8" Margin="12,12,12,0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="130" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <Button Style="{StaticResource EmptyHighlightButton}" VerticalAlignment="Top" Margin="0,12,0,0" Click="Button_Click_4">
+                                <Border Width="128" Height="128" BorderBrush="{StaticResource AvatarChromeBrush}" BorderThickness="2" CornerRadius="2">
+                                    <Image Width="128" Height="128" Source="{Binding Path=UserAvatar, Mode=OneWay}" Stretch="Fill" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                </Border>
+                            </Button>
+                            <StackPanel Margin="12,12,0,0" Grid.Column="1">
+                                <TextBlock Text="{Binding Username}" FontSize="24" />
+                                <TextBlock Text="{Binding Description}" />
+                                <TextBox Text="{Binding UserStatus, Mode=TwoWay}" Margin="-14,4,-14,0" TextWrapping="Wrap" Background="{StaticResource ButtonPressedBrush}" Height="148" />
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
+                    <Border BorderThickness="0,0,0,1" BorderBrush="#FFC8C8C8" Margin="12,0">
+                        <Button Style="{StaticResource GreyButton}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Left" Width="432" Click="Button_Click">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="Email address" FontWeight="SemiBold" />
+                                <TextBlock x:Name="tbEmail" Grid.Row="1" Text="{Binding EmailAddr, Mode=TwoWay}" Foreground="{StaticResource TextSpecialForeground2}" />
+                                <TextBox Grid.Row="1" x:Name="txtEmail" Text="{Binding EmailAddr, Mode=TwoWay}" Visibility="Collapsed" LostFocus="txtEmail_LostFocus" GotFocus="txtEmail_GotFocus" />
+                            </Grid>
+                        </Button>
+                    </Border>
+                    <Border BorderThickness="0,0,0,1" BorderBrush="#FFC8C8C8" Margin="12,0">
+                        <Button Style="{StaticResource GreyButton}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Left" Width="432" Click="Button_Click_3">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="Asclepius Gadget" FontWeight="SemiBold" />
+                                <TextBlock Grid.Row="1" Text="Disconnected" Foreground="{StaticResource TextSpecialForeground2}" />
+                            </Grid>
+                        </Button>
+                    </Border>
+                    <Border BorderThickness="0" BorderBrush="#FFC8C8C8" Margin="12,0">
+                        <Button Style="{StaticResource GreyButton}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Left" Width="432">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="Sharing Status" FontWeight="SemiBold" />
+                                <Grid Grid.Row="1">
+                                    <toolkit:ToggleSwitch Header="Sharing Enabled" HeaderTemplate="{StaticResource ToggleSwitchHeaderTemplate}" />
+                                </Grid>
+                            </Grid>
+                        </Button>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+            <Button Content="Sign out" VerticalAlignment="Bottom" Click="Button_Click_1"/>
+        </Grid>
+    </Grid>
+
+</phone:PhoneApplicationPage>

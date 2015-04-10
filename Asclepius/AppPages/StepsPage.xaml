@@ -1,0 +1,213 @@
+﻿<phone:PhoneApplicationPage
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:amCharts="clr-namespace:AmCharts.Windows.QuickCharts;assembly=AmCharts.Windows.QuickCharts.WP"
+    xmlns:Converters="clr-namespace:Asclepius.Converters"
+    x:Class="Asclepius.AppPages.StepsPage"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="True"
+>
+
+    <phone:PhoneApplicationPage.Resources>
+        <Converters:TimeToStringConverter x:Key="TimeToStringConverter"/>
+        <Converters:TextWithUnitConverter x:Key="TextWithUnitConverter"/>
+    </phone:PhoneApplicationPage.Resources>
+    <phone:PhoneApplicationPage.FontFamily>
+        <StaticResource ResourceKey="PhoneFontFamilyNormal"/>
+    </phone:PhoneApplicationPage.FontFamily>
+    <phone:PhoneApplicationPage.FontSize>
+        <StaticResource ResourceKey="PhoneFontSizeNormal"/>
+    </phone:PhoneApplicationPage.FontSize>
+    <phone:PhoneApplicationPage.Foreground>
+        <StaticResource ResourceKey="PhoneForegroundBrush"/>
+    </phone:PhoneApplicationPage.Foreground>
+
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar Mode="Default" Opacity="0.5" IsMenuEnabled="True" IsVisible="True">
+            <shell:ApplicationBarIconButton IconUri="Resources/images/back.png" Text="back" Click="ApplicationBarIconButton_Click_Back" />
+            <shell:ApplicationBarIconButton IconUri="Resources/images/next.png" Text="next" Click="ApplicationBarIconButton_Click_Next" IsEnabled="False" />
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="{StaticResource AppBGBrush}">
+        <phone:Pivot x:Name="pivot1" Title="steps" SelectionChanged="pivot1_SelectionChanged">
+
+            <!--Panorama item one-->
+            <phone:PivotItem Header="daily">
+                <Grid>
+                    <ScrollViewer VerticalAlignment="Top" Height="532">
+                        <StackPanel>
+                            <Border BorderThickness="0,0,0,1" BorderBrush="#FFC8C8C8" Margin="12,0">
+                                <Button Style="{StaticResource GreyButton}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Left" Width="432">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Row="0" Text="{Binding DayText}" FontWeight="SemiBold" Foreground="{StaticResource PhoneTextBoxForegroundBrush}" />
+                                        <StackPanel Grid.Row="1" Orientation="Horizontal">
+                                            <TextBlock Text="{Binding TotalSteps}" FontWeight="SemiBold" FontSize="36" Foreground="{StaticResource PhoneTextBoxForegroundBrush}" VerticalAlignment="Bottom" />
+                                            <TextBlock Margin="8,0,0,0" Text="steps" FontWeight="SemiBold" FontSize="36" VerticalAlignment="Bottom" />
+                                        </StackPanel>
+                                        <amCharts:SerialChart x:Name="chart1" DataSource="{Binding ChartData, Mode=OneWay}" CategoryValueMemberPath="value1"
+								Grid.Row="3" Foreground="{StaticResource PhoneTextBoxForegroundBrush}" AxisForeground="{StaticResource PhoneTextBoxForegroundBrush}" Height="180" LegendVisibility="Collapsed"
+								MinimumCategoryGridStep="32">
+                                            <amCharts:SerialChart.Graphs>
+                                                <amCharts:AreaGraph ValueMemberPath="value2" Brush="{StaticResource ButtonPressedBrush}" />
+                                            </amCharts:SerialChart.Graphs>
+                                        </amCharts:SerialChart>
+                                    </Grid>
+                                </Button>
+                            </Border>
+                            <Border BorderThickness="0,0,0,1" BorderBrush="#FFC8C8C8" Margin="12,0">
+                                <Button Style="{StaticResource GreyButton}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Left" Width="432">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Row="0" Text="Running steps" FontWeight="SemiBold" />
+                                        <TextBlock Grid.Row="1" Text="{Binding RunningSteps}" Foreground="{StaticResource TextSpecialForeground2}" />
+                                    </Grid>
+                                </Button>
+                            </Border>
+                            <Border BorderThickness="0,0,0,1" BorderBrush="#FFC8C8C8" Margin="12,0">
+                                <Button Style="{StaticResource GreyButton}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Left" Width="432">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Row="0" Text="Distance" FontWeight="SemiBold" />
+                                        <TextBlock Grid.Row="1" Text="{Binding Distance, ConverterParameter=km, Converter={StaticResource TextWithUnitConverter}}" Foreground="{StaticResource TextSpecialForeground2}" />
+                                    </Grid>
+                                </Button>
+                            </Border>
+                            <Border BorderThickness="0,0,0,1" BorderBrush="#FFC8C8C8" Margin="12,0">
+                                <Button Style="{StaticResource GreyButton}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Left" Width="432">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Row="0" Text="Walk time" FontWeight="SemiBold" />
+                                        <TextBlock Grid.Row="1" Text="{Binding Path=WalkTime, Converter={StaticResource TimeToStringConverter}}" Foreground="{StaticResource TextSpecialForeground2}" />
+                                    </Grid>
+                                </Button>
+                            </Border>
+                            <Border BorderThickness="0" BorderBrush="#FFC8C8C8" Margin="12,0">
+                                <Button Style="{StaticResource GreyButton}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Left" Width="432">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Row="0" Text="Run time" FontWeight="SemiBold" />
+                                        <TextBlock Grid.Row="1" Text="{Binding Path=RunTime, Converter={StaticResource TimeToStringConverter}}" Foreground="{StaticResource TextSpecialForeground2}" />
+                                    </Grid>
+                                </Button>
+                            </Border>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </phone:PivotItem>
+
+            <!--Panorama item two-->
+            <phone:PivotItem Header="weekly">
+                <Grid>
+                    <ScrollViewer VerticalAlignment="Top" Height="532">
+                        <StackPanel>
+                            <Border BorderThickness="0,0,0,1" BorderBrush="#FFC8C8C8" Margin="12,0">
+                                <Button Style="{StaticResource GreyButton}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Left" Width="432">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Grid.Row="0" Text="{Binding FirstDay}" FontWeight="SemiBold" Foreground="{StaticResource PhoneTextBoxForegroundBrush}" />
+                                            <TextBlock Grid.Row="0" Text=" - " FontWeight="SemiBold" Foreground="{StaticResource PhoneTextBoxForegroundBrush}" />
+                                            <TextBlock Grid.Row="0" Text="{Binding LastDay}" FontWeight="SemiBold" Foreground="{StaticResource PhoneTextBoxForegroundBrush}" />
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="1" Orientation="Horizontal">
+                                            <TextBlock Text="{Binding TotalSteps}" FontWeight="SemiBold" FontSize="36" Foreground="{StaticResource PhoneTextBoxForegroundBrush}" VerticalAlignment="Bottom" />
+                                            <TextBlock Margin="8,0,0,0" Text="steps" FontWeight="SemiBold" FontSize="36" VerticalAlignment="Bottom" />
+                                        </StackPanel>
+                                        <amCharts:SerialChart x:Name="chart2" DataSource="{Binding ChartData, Mode=OneWay}" CategoryValueMemberPath="value1"
+								Grid.Row="3" Foreground="{StaticResource PhoneTextBoxForegroundBrush}" AxisForeground="{StaticResource PhoneTextBoxForegroundBrush}" Height="180" LegendVisibility="Collapsed"
+								MinimumCategoryGridStep="32">
+                                            <amCharts:SerialChart.Graphs>
+                                                <amCharts:ColumnGraph ValueMemberPath="value2" Brush="{StaticResource ButtonPressedBrush}" />
+                                            </amCharts:SerialChart.Graphs>
+                                        </amCharts:SerialChart>
+                                    </Grid>
+                                </Button>
+                            </Border>
+                            <Border BorderThickness="0,0,0,1" BorderBrush="#FFC8C8C8" Margin="12,0">
+                                <Button Style="{StaticResource GreyButton}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Left" Width="432">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Row="0" Text="Total distance" FontWeight="SemiBold" />
+                                        <TextBlock Grid.Row="1" Text="{Binding Distance, ConverterParameter=km, Converter={StaticResource TextWithUnitConverter}}" Foreground="{StaticResource TextSpecialForeground2}" />
+                                    </Grid>
+                                </Button>
+                            </Border>
+                            <Border BorderThickness="0,0,0,1" BorderBrush="#FFC8C8C8" Margin="12,0">
+                                <Button Style="{StaticResource GreyButton}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Left" Width="432">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Row="0" Text="Daily average" FontWeight="SemiBold" />
+                                        <TextBlock Grid.Row="1" Text="{Binding AverageSteps, ConverterParameter='steps', Converter={StaticResource TextWithUnitConverter}}" Foreground="{StaticResource TextSpecialForeground2}" />
+                                    </Grid>
+                                </Button>
+                            </Border>
+                            <Border BorderThickness="0,0,0,0" BorderBrush="#FFC8C8C8" Margin="12,0">
+                                <Button Style="{StaticResource GreyButton}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Left" Width="432">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Row="0" Text="Total time" FontWeight="SemiBold" />
+                                        <TextBlock Grid.Row="1" Text="{Binding TotalTime, Converter={StaticResource TimeToStringConverter}}" Foreground="{StaticResource TextSpecialForeground2}" />
+                                    </Grid>
+                                </Button>
+                            </Border>
+                        </StackPanel>
+                    </ScrollViewer>                        
+                </Grid>
+            </phone:PivotItem>
+        </phone:Pivot>
+        
+        <!--<Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        --><!--TitlePanel contains the name of the application and page title--><!--
+        <StackPanel Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock Text="ASCLEPIUS" Style="{StaticResource PhoneTextNormalStyle}" Foreground="{StaticResource PhoneTextBoxForegroundBrush}"/>
+            <TextBlock Text="steps" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" Foreground="{StaticResource PhoneTextBoxForegroundBrush}"/>
+        </StackPanel>-->
+
+        <!--ContentPanel - place additional content here-->
+
+
+    </Grid>
+
+</phone:PhoneApplicationPage>

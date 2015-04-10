@@ -1,0 +1,60 @@
+﻿<phone:PhoneApplicationPage
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:UserControls="clr-namespace:Asclepius.AppPages.UserControls"
+    x:Class="Asclepius.AppPages.HubPage"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="True">
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="{StaticResource AppBGBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock Text="ASCLEPIUS" Style="{StaticResource PhoneTextNormalStyle}" Foreground="{StaticResource PhoneTextBoxForegroundBrush}"/>
+            <TextBlock Text="welcome" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" Foreground="{StaticResource PhoneTextBoxForegroundBrush}"/>
+        </StackPanel>
+
+        <Grid Margin="16" HorizontalAlignment="Right" VerticalAlignment="Top">
+            <Border CornerRadius="36" BorderBrush="{StaticResource AvatarChromeBrush}" BorderThickness="2">
+                <Button Style="{StaticResource EmptyHighlightButton}" Click="Button_Click">
+                    <Button.Clip>
+                        <EllipseGeometry Center="36,36" RadiusX="36" RadiusY="36" />
+                    </Button.Clip>
+                    <Image Width="72" Height="72" Source="{Binding UserAvatar, Mode=OneWay}" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Button>
+            </Border>
+        </Grid>
+
+        <Grid x:Name="ContentPanel" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <UserControls:StepsButton Grid.Row="1" x:Name="stepsButton" />
+            <UserControls:CaloriesButton Grid.Row="1" x:Name="caloriesButton" Grid.Column="1" />
+            <UserControls:GadgetButton  Grid.Row="0" Grid.ColumnSpan="2"/>
+            <UserControls:FriendsButton Grid.Column="1" Grid.Row="2"/>
+            <UserControls:WorkoutButton Grid.RowSpan="2" Grid.Row="2"/>
+        </Grid>
+    </Grid>
+
+</phone:PhoneApplicationPage>
