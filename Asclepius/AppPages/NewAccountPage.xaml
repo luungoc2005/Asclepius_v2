@@ -185,8 +185,8 @@
                 <Grid>
                     <StackPanel>
                         <TextBlock Text="Congratulations!" HorizontalAlignment="Stretch" TextWrapping="Wrap" />
-                        <TextBlock Text="You completed the new account wizard"  HorizontalAlignment="Stretch" TextWrapping="Wrap" Margin="0,12" />
-                        <TextBlock Text="You can review the information you entered. Tap 'Finish' to start using Asclepius!"  HorizontalAlignment="Stretch" TextWrapping="Wrap" Margin="0,12" />
+                        <TextBlock Text="You have completed the new account wizard."  HorizontalAlignment="Stretch" TextWrapping="Wrap" Margin="0,12" />
+                        <TextBlock Text="You can review the information you entered. Tap 'Finish' to start using Asclepius!"  HorizontalAlignment="Stretch" TextWrapping="Wrap" Margin="0,0,0,12" />
                     </StackPanel>
 
                     <Button Content="Finish" VerticalAlignment="Bottom" Click="Button_Click_7" />

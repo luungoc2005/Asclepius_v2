@@ -18,6 +18,14 @@ namespace Asclepius.AppPages.Models
         private ObservableCollection<ValuePair> heartChartData;
         public ObservableCollection<ValuePair> HeartChartData { get { return heartChartData; } }
 
+        public List<Snapshot> ListSnapshots
+        {
+            get
+            {
+                return user.Snapshots;
+            }
+        }
+
         public class ValuePair
         {
             public int value1 { get; set; }
@@ -64,7 +72,8 @@ namespace Asclepius.AppPages.Models
             gadgetHelper.HeartRateChanged += gadgetHelper_HeartRateChanged;
             gadgetHelper.TemperatureChanged += gadgetHelper_TemperatureChanged;
             gadgetHelper.GadgetStateChanged += gadgetHelper_GadgetStateChanged;
-            gadgetHelper.IsEnabled = true;
+
+            OnPropertyChanged("ListSnapshots");
         }
 
         double _temperature; double _heartrate;
@@ -78,6 +87,7 @@ namespace Asclepius.AppPages.Models
             {
                 _temperature = value;
                 OnPropertyChanged("Temperature");
+                OnPropertyChanged("IsTempUpdating");
             }
         }
 
@@ -101,6 +111,14 @@ namespace Asclepius.AppPages.Models
             get
             {
                 return (_heartrate == 0);
+            }
+        }
+
+        public bool IsTempUpdating
+        {
+            get
+            {
+                return (_temperature == 0);
             }
         }
 

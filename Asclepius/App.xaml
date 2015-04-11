@@ -13,6 +13,8 @@
         <Converters:BMIToImageConverter x:Key="BMIToImageConverter"/>
         <Converters:BMIToTextConverter x:Key="BMIToTextConverter"/>
         <Converters:TextWithUnitConverter x:Key="TextWithUnitConverter" />
+        <Converters:DateTimeToDateStringConverter x:Key="DateTimeToDateStringConverter" />
+        <Converters:IsNullToVisibilityConverter x:Key="IsNullToVisibilityConverter" />
         <local:LocalizedStrings xmlns:local="clr-namespace:Asclepius" x:Key="LocalizedStrings"/>
         <SolidColorBrush x:Key="TextSpecialForeground" Color="#FF005209"/>
         <SolidColorBrush x:Key="TextSpecialForeground2" Color="#FF7D7D7D"/>
@@ -698,14 +700,25 @@
                                 </VisualStateGroup>
                             </VisualStateManager.VisualStateGroups>
                             <StackPanel x:Name="border" Orientation="Horizontal">
-                                <Image Width="128" Height="128" Source="{Binding Path=BMI, Converter={StaticResource BMIToImageConverter}}" />
+                                <Border BorderThickness="1" BorderBrush="{StaticResource AvatarChromeBrush}" Background="{StaticResource AppBGBrush}">
+                                    <Image Width="128" Height="128" Source="{Binding Path=BMI, Converter={StaticResource BMIToImageConverter}}" />
+                                </Border>
                                 <StackPanel Margin="12,0,0,0" Orientation="Vertical">
-                                    <TextBlock Text="{Binding Path=DateTaken}" FontWeight="SemiBold" FontSize="30" />
+                                    <TextBlock Text="{Binding Path=DateTaken,Converter={StaticResource DateTimeToDateStringConverter}}" FontWeight="SemiBold" FontSize="30" />
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="Weight:" />
                                         <TextBlock Margin="8,0,0,0" Text="{Binding Path=Weight,Converter={StaticResource TextWithUnitConverter},ConverterParameter='kg'}" />
                                         <TextBlock Margin="12,0,0,0" Text="Height:" />
                                         <TextBlock Margin="8,0,0,0" Text="{Binding Path=Height,Converter={StaticResource TextWithUnitConverter},ConverterParameter='cm'}" />                                        
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="BMI:" />
+                                        <TextBlock Margin="8,0,0,0" Text="{Binding BMI}" Visibility="{Binding Path=BMI,Converter={StaticResource IsNullToVisibilityConverter}}" />
+                                        <TextBlock Margin="8,0,0,0" Text="{Binding BMI, ConverterParameter=' (\{0\})', Converter={StaticResource BMIToTextConverter}}" Visibility="{Binding Path=BMI,Converter={StaticResource IsNullToVisibilityConverter}}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Resting heart rate:" Visibility="{Binding Path=HeartRate,Converter={StaticResource IsNullToVisibilityConverter}}" />
+                                        <TextBlock Margin="8,0,0,0" Text="{Binding Path=HeartRate,Converter={StaticResource TextWithUnitConverter},ConverterParameter=BPM}" Visibility="{Binding Path=HeartRate,Converter={StaticResource IsNullToVisibilityConverter}}" />
                                     </StackPanel>
                                 </StackPanel>
                             </StackPanel>

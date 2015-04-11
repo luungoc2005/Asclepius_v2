@@ -115,11 +115,15 @@
     <Compile Include="AppPages\Models\LoginPageModel.cs" />
     <Compile Include="AppPages\Models\NewAccountPageModel.cs" />
     <Compile Include="AppPages\Models\DailyStepsPageModel.cs" />
+    <Compile Include="AppPages\Models\NewSnapshotPageModel.cs" />
     <Compile Include="AppPages\Models\UserPageModel.cs" />
     <Compile Include="AppPages\Models\WeeklyCaloriesPageModel.cs" />
     <Compile Include="AppPages\Models\WeeklyStepsPageModel.cs" />
     <Compile Include="AppPages\NewAccountPage.xaml.cs">
       <DependentUpon>NewAccountPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppPages\NewSnapshotPage.xaml.cs">
+      <DependentUpon>NewSnapshotPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="AppPages\ProfilePage.xaml.cs">
       <DependentUpon>ProfilePage.xaml</DependentUpon>
@@ -152,7 +156,9 @@
     <Compile Include="Converters\BMIToTextConverter.cs" />
     <Compile Include="Converters\BoolToConnectedConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\DateTimeToDateStringConverter.cs" />
     <Compile Include="Converters\GenderEnumToBoolConverter.cs" />
+    <Compile Include="Converters\IsNullToVisibilityConverter.cs" />
     <Compile Include="Converters\ReverseBoolToVisibilityConverter.cs" />
     <Compile Include="Converters\TextToPasswordConverter.cs" />
     <Compile Include="Converters\TextWithUnitConverter.cs" />
@@ -207,6 +213,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AppPages\NewAccountPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppPages\NewSnapshotPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

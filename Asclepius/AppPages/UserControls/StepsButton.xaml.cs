@@ -8,6 +8,7 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using System.ComponentModel;
+using System.Windows.Threading;
 
 namespace Asclepius.AppPages.UserControls
 {
@@ -18,13 +19,16 @@ namespace Asclepius.AppPages.UserControls
         public StepsButton()
         {
             InitializeComponent();
-            this.Loaded += StepsButton_Loaded;
+
+            DispatcherTimer updateTimer=new DispatcherTimer();
+            updateTimer.Interval=TimeSpan.FromMilliseconds(500);
+            updateTimer.Tick+=updateTimer_Tick;
+            updateTimer.Start();
         }
 
-        void StepsButton_Loaded(object sender, RoutedEventArgs e)
+        void updateTimer_Tick(object sender, EventArgs e)
         {
-            var button = this as StepsButton;
-            button.barCore.Height = (double)Percentage * button.barMain.ActualHeight;
+            barCore.Height = (double)Percentage * barMain.ActualHeight;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -40,13 +44,7 @@ namespace Asclepius.AppPages.UserControls
 
         // Using a DependencyProperty as the backing store for Percentage.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty PercentageProperty =
-            DependencyProperty.Register("Percentage", typeof(double), typeof(CaloriesButton), new PropertyMetadata(0.0,
-                new PropertyChangedCallback(ProgressPropertyChanged)));
+            DependencyProperty.Register("Percentage", typeof(double), typeof(StepsButton), new PropertyMetadata(0.0));
 
-        private static void ProgressPropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
-        {
-            var button = sender as StepsButton;
-            if (button != null) button.barCore.Height = (double)e.NewValue * button.barMain.ActualHeight;
-        }
     }
 }

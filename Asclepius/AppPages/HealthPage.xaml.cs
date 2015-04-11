@@ -24,5 +24,10 @@ namespace Asclepius.AppPages
         {
             this.NavigationService.Navigate(new Uri("/AppPages/HubPage.xaml", UriKind.Relative));
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new Uri("/AppPages/NewSnapshotPage.xaml", UriKind.Relative));
+        }
     }
 }

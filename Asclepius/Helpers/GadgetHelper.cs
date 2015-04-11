@@ -107,7 +107,7 @@ namespace Asclepius.Helpers
             }
         }
 
-        float[] _samples = new float[10];
+        float[] _samples = new float[5];
         int _count = 0;
 
         void bluetooth_MessageReceived(float num1, float num2)
@@ -129,8 +129,8 @@ namespace Asclepius.Helpers
 
                 for (int i = 0; i < _samples.Length; i++)
                 {
-                    _sumOfSamples += _samples[i];
-                    if (_samples[i] != 0) _countOfSamples += 1;
+                    _sumOfSamples += (i + 1) * _samples[i];
+                    if (_samples[i] != 0) _countOfSamples += (i + 1);
                 }
                 _average = _sumOfSamples / _countOfSamples;
 
@@ -138,7 +138,7 @@ namespace Asclepius.Helpers
                 for (int i = 0; i < _samples.Length; i++)
                 {
                     _variance += (i+1) * (_samples[i] - _average) * (_samples[i] - _average); //weighted variance
-                    _countOfSamples += i;
+                    _countOfSamples += (i + 1);
                 }
                 _variance = _variance / _countOfSamples;
 

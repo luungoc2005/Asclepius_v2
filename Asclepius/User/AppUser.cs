@@ -238,6 +238,24 @@ namespace Asclepius.User
 
         #endregion
 
+        #region "Heart rate"
+        public double HeartRate //user heart rate
+        {
+            get
+            {
+                if (Snapshots.Count == 0)
+                {
+                    return 0;
+                }
+                else
+                {
+                    int index = Snapshots.FindIndex(snap => snap.HeartRate != 0); //first instance of non-zero heart rate
+                    return (index == -1 ? 0 : Snapshots[index].HeartRate);
+                }
+            }
+        }
+        #endregion
+
         #region "Social"
 
         public List<string> Friends;

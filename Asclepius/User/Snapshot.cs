@@ -19,6 +19,7 @@ namespace Asclepius.User
 
         public Snapshot()
         {
+            DateTaken = DateTime.Now;
             var user = AccountsManager.Instance.CurrentUser;
             if (user != null)
             {

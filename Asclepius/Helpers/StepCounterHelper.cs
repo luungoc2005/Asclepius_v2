@@ -192,6 +192,7 @@ namespace Asclepius.Helpers
                 }
             }
             _changeCount = (_changeCount >= 4 ? 0 : _changeCount + 1);
+            _lastCount = _stepCount;
 
             if (IsWalking) { WalkTime += 1; }
             if (IsRunning) { RunTime += 1; }

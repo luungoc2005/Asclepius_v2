@@ -142,7 +142,7 @@ namespace Asclepius.Helpers
 
         public int GetDailyCalorieGoal()
         {
-            return (int)(RawBMR(_user.UserGender, _user.Weight, _user.Height, _user.Age) * GetHBMultiplier(_user.UserActivityLevel));
+            return (int)((double)RawBMR(_user.UserGender, _user.Weight, _user.Height, _user.Age) * GetHBMultiplier(_user.UserActivityLevel));
         }
 
         //per day

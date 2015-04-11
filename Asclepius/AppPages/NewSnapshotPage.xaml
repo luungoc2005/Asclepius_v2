@@ -1,0 +1,131 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="Asclepius.AppPages.NewSnapshotPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:Converters="clr-namespace:Asclepius.Converters"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait"  Orientation="Portrait"
+    shell:SystemTray.IsVisible="True">
+
+    <phone:PhoneApplicationPage.Resources>
+        <Converters:ReverseBooleanToVisibilityConverter x:Key="ReverseBooleanToVisibilityConverter"/>
+        <Converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <Converters:TextWithUnitConverter x:Key="TextWithUnitConverter"/>
+    </phone:PhoneApplicationPage.Resources>
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="{StaticResource AppBGBrush}">
+        <!--Pivot Control-->
+        <phone:Pivot x:Name="mainPivot" Title="new snapshot">
+            <!--Pivot item one-->
+            <phone:PivotItem Header="welcome">
+                <Grid>
+                    <StackPanel>
+                        <TextBlock Text="This wizard will help you create a new snapshot, which is a record of your body stats for track keeping." HorizontalAlignment="Stretch" TextWrapping="Wrap" />
+                        <TextBlock Text="Click 'Next' to continue."  HorizontalAlignment="Stretch" TextWrapping="Wrap" Margin="0,12" />
+                    </StackPanel>
+                    <Button Content="Next" VerticalAlignment="Bottom" Click="Button_Click" />
+                </Grid>
+            </phone:PivotItem>
+
+            <!--Pivot item two-->
+            <phone:PivotItem Header="weight and height">
+                <Grid>
+                    <StackPanel>
+                        <TextBlock Text="Please fill out the information below to help Asclepius calculate various stats for you." HorizontalAlignment="Stretch" TextWrapping="Wrap" />
+                        <TextBlock Text="Some of Asclepius's features may require this information to work correctly."  HorizontalAlignment="Stretch" TextWrapping="Wrap" Margin="0,12" />
+
+                        <Border BorderThickness="0,0,0,1" BorderBrush="#FFC8C8C8" Margin="12,0">
+                            <Button Style="{StaticResource GreyButton}" HorizontalContentAlignment="Stretch" Click="Button_Click_1">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" Text="Weight" FontWeight="SemiBold" />
+                                    <TextBlock Grid.Row="1" x:Name="tbWeight" Text="{Binding Weight, ConverterParameter=kg, Converter={StaticResource TextWithUnitConverter}, Mode=TwoWay}" Foreground="{StaticResource TextSpecialForeground2}" />
+                                    <TextBox Grid.Row="1" x:Name="txtWeight" Text="{Binding Weight, Mode=TwoWay}" Visibility="Collapsed" GotFocus="txtWeight_GotFocus" LostFocus="txtWeight_LostFocus" />
+                                </Grid>
+                            </Button>
+                        </Border>
+                        <Border BorderThickness="0" BorderBrush="#FFC8C8C8" Margin="12,0">
+                            <Button Style="{StaticResource GreyButton}" HorizontalContentAlignment="Stretch" Click="Button_Click_2">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" Text="Height" FontWeight="SemiBold" />
+                                    <TextBlock Grid.Row="1" x:Name="tbHeight" Text="{Binding Height, ConverterParameter=cm, Converter={StaticResource TextWithUnitConverter}, Mode=TwoWay}" Foreground="{StaticResource TextSpecialForeground2}" />
+                                    <TextBox Grid.Row="1" x:Name="txtHeight" Text="{Binding Height, Mode=TwoWay}" Visibility="Collapsed" GotFocus="txtHeight_GotFocus" LostFocus="txtHeight_LostFocus" />
+                                </Grid>
+                            </Button>
+                        </Border>
+                    </StackPanel>
+                    <Button Content="Next" VerticalAlignment="Bottom" Click="Button_Click" />
+                </Grid>
+            </phone:PivotItem>
+            
+            <phone:PivotItem Header="heart rate">
+                <Grid>
+                    <StackPanel>
+                        <TextBlock Text="The resting heart rate is your heart rate at rest, typically measured after you just wake up." HorizontalAlignment="Stretch" TextWrapping="Wrap" />
+                        <TextBlock Text="Resting heart rate varies greatly but it is typically at about 60 BPM for an adult."  HorizontalAlignment="Stretch" TextWrapping="Wrap" Margin="0,12" />
+                        <TextBlock Text="Please use the gadget or measure your resting heart rate by yourself, or you can skip this step."  HorizontalAlignment="Stretch" TextWrapping="Wrap" Margin="0,0,0,12" />
+
+                        <Border BorderThickness="0" BorderBrush="#FFC8C8C8" Margin="12,0">
+                            <Button Style="{StaticResource GreyButton}" HorizontalContentAlignment="Stretch" Click="Button_Click_3">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" Text="Resting heart rate" FontWeight="SemiBold" />
+                                    <TextBlock Grid.Row="1" x:Name="tbHeart" Text="{Binding UserHeartRate, ConverterParameter=BPM, Converter={StaticResource TextWithUnitConverter}, Mode=TwoWay}" Foreground="{StaticResource TextSpecialForeground2}" />
+                                    <TextBox Grid.Row="1" x:Name="txtHeart" Text="{Binding UserHeartRate, Mode=TwoWay}" Visibility="Collapsed" GotFocus="txtHeart_GotFocus" LostFocus="txtHeart_LostFocus" />
+                                </Grid>
+                            </Button>
+                        </Border>
+                        <Border BorderThickness="0,1,0,0" BorderBrush="#FFC8C8C8" Margin="12,0">
+                            <Button Style="{StaticResource GreyButton}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Left" Width="432">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="Measured heart rate" FontWeight="SemiBold" />
+                                    <StackPanel Grid.Row="1" Orientation="Horizontal">
+                                        <TextBlock Text="Current heart rate:" Foreground="{StaticResource TextSpecialForeground2}" />
+                                        <TextBlock Text="{Binding HeartRate, ConverterParameter=BPM, Converter={StaticResource TextWithUnitConverter}}" Foreground="{StaticResource TextSpecialForeground2}" Margin="8,0,0,0" Visibility="{Binding IsHeartUpdating, Converter={StaticResource ReverseBooleanToVisibilityConverter}}" />
+                                        <TextBlock Margin="8,0,0,0" Text="waiting" Foreground="{StaticResource TextSpecialForeground2}" Visibility="{Binding IsHeartUpdating, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                        <ProgressBar Width="80" IsIndeterminate="True" Foreground="{StaticResource TextSpecialForeground2}" Visibility="{Binding IsHeartUpdating, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                    </StackPanel>
+                                </Grid>
+                            </Button>
+                        </Border>
+                    </StackPanel>
+                    <Button Content="Next" VerticalAlignment="Bottom" Click="Button_Click" />
+                </Grid>
+            </phone:PivotItem>
+
+            <phone:PivotItem Header="finish">
+                <Grid>
+                    <StackPanel>
+                        <TextBlock Text="Congratulations!" HorizontalAlignment="Stretch" TextWrapping="Wrap" />
+                        <TextBlock Text="You have completed the new snapshot wizard."  HorizontalAlignment="Stretch" TextWrapping="Wrap" Margin="0,12" />
+                        <TextBlock Text="You can review the information you entered. Tap 'Finish' to return to the health page."  HorizontalAlignment="Stretch" TextWrapping="Wrap" Margin="0,0,0,12" />
+                    </StackPanel>
+
+                    <Button Content="Finish" VerticalAlignment="Bottom" Click="Button_Click_7" />
+                </Grid>
+            </phone:PivotItem>
+        </phone:Pivot>
+    </Grid>
+    
+</phone:PhoneApplicationPage>

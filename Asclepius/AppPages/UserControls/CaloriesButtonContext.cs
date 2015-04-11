@@ -35,6 +35,8 @@ namespace Asclepius.AppPages.UserControls
             if (_selectedUser != null && _selectedUser == User.AccountsManager.Instance.CurrentUser)
             {
                 OnPropertyChanged(null);
+                OnPropertyChanged("TotalCalories");
+                OnPropertyChanged("Percentage");
             }
         }
 

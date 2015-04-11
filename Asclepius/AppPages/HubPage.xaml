@@ -29,8 +29,8 @@
 
         <Grid Margin="16" HorizontalAlignment="Right" VerticalAlignment="Top">
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding Temperature}" Margin="12,0,0,0" />
-                <TextBlock Text="{Binding HeartRate}" Margin="12,0,0,0" />
+                <TextBlock Text="{Binding Temperature}" Margin="12,0,0,0" Visibility="Collapsed" />
+                <TextBlock Text="{Binding HeartRate}" Margin="12,0,0,0" Visibility="Collapsed" />
                 
                 <Border CornerRadius="36" BorderBrush="{StaticResource AvatarChromeBrush}" BorderThickness="2">
                     <Button Style="{StaticResource EmptyHighlightButton}" Click="Button_Click">
@@ -54,7 +54,7 @@
                 <RowDefinition />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <UserControls:StepsButton Grid.Row="1" x:Name="stepsButton" />
+            <UserControls:StepsButton Percentage="{Binding Percentage}" Grid.Row="1" x:Name="stepsButton" />
             <UserControls:CaloriesButton Percentage="{Binding Percentage}" Grid.Row="1" x:Name="caloriesButton" Grid.Column="1" />
             <UserControls:GadgetButton  Grid.Row="0" Grid.ColumnSpan="2" ButtonClick="GadgetButton_ButtonClick"/>
             <UserControls:FriendsButton Grid.Column="1" Grid.Row="2"/>

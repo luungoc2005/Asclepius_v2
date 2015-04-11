@@ -5,7 +5,8 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:amCharts="clr-namespace:AmCharts.Windows.QuickCharts;assembly=AmCharts.Windows.QuickCharts.WP" xmlns:Converters="clr-namespace:Asclepius.Converters"
+    xmlns:amCharts="clr-namespace:AmCharts.Windows.QuickCharts;assembly=AmCharts.Windows.QuickCharts.WP"
+    xmlns:Converters="clr-namespace:Asclepius.Converters"
     x:Class="Asclepius.AppPages.HealthPage"
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d"
@@ -30,7 +31,15 @@
     <Grid x:Name="LayoutRoot" Background="{StaticResource AppBGBrush}">
         <phone:Pivot Title="health">
             <phone:PivotItem Header="snapshots">
-                <Grid/>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="72" />
+                    </Grid.RowDefinitions>
+                    <ListBox ItemsSource="{Binding Path=ListSnapshots}" ItemContainerStyle="{StaticResource SnapshotsListItem}">
+                    </ListBox>
+                    <Button Grid.Row="1" Content="Create a new snapshot" Click="Button_Click" />
+                </Grid>
             </phone:PivotItem>
             <phone:PivotItem Header="stats">
                 <Grid>
@@ -71,7 +80,9 @@
                                     <TextBlock Text="Temperature" FontWeight="SemiBold" />
                                     <StackPanel Grid.Row="1" Orientation="Horizontal">
                                         <TextBlock Text="Current temperature:" Foreground="{StaticResource TextSpecialForeground2}" />
-                                        <TextBlock Text="{Binding Temperature, ConverterParameter=°C, Converter={StaticResource TextWithUnitConverter}}" Foreground="{StaticResource TextSpecialForeground2}" Margin="8,0,0,0" />
+                                        <TextBlock Text="{Binding Temperature, ConverterParameter=°C, Converter={StaticResource TextWithUnitConverter}}" Foreground="{StaticResource TextSpecialForeground2}" Margin="8,0,0,0" Visibility="{Binding IsTempUpdating, Converter={StaticResource ReverseBooleanToVisibilityConverter}}" />
+                                        <TextBlock Margin="8,0,0,0" Text="waiting" Foreground="{StaticResource TextSpecialForeground2}" Visibility="{Binding IsTempUpdating, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                        <ProgressBar Width="70" IsIndeterminate="True" Foreground="{StaticResource TextSpecialForeground2}" Visibility="{Binding IsTempUpdating, Converter={StaticResource BooleanToVisibilityConverter}}" />
                                     </StackPanel>
                                 </Grid>
                             </Button>
