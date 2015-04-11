@@ -42,7 +42,15 @@ namespace Asclepius.AppPages
         protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
         {
             User.AccountsManager.Instance.SaveUser();
-            this.NavigationService.Navigate(new Uri("/AppPages/LoginPage.xaml", UriKind.Relative));
+            if (MessageBox.Show("Are you sure you want to sign out?", "Prompt", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+            {
+                this.NavigationService.Navigate(new Uri("/AppPages/LoginPage.xaml", UriKind.Relative));
+            }
+        }
+
+        private void GadgetButton_ButtonClick(object sender, EventArgs e)
+        {
+            this.NavigationService.Navigate(new Uri("/AppPages/HealthPage.xaml", UriKind.Relative));
         }
     }
 }

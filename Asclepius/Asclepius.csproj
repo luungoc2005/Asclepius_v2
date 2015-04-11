@@ -111,6 +111,7 @@
     </Compile>
     <Compile Include="AppPages\Models\AccountsSwitcherModel.cs" />
     <Compile Include="AppPages\Models\DailyCaloriesPageModel.cs" />
+    <Compile Include="AppPages\Models\HealthPageModel.cs" />
     <Compile Include="AppPages\Models\LoginPageModel.cs" />
     <Compile Include="AppPages\Models\NewAccountPageModel.cs" />
     <Compile Include="AppPages\Models\DailyStepsPageModel.cs" />
@@ -147,8 +148,12 @@
     <Compile Include="Common\ObservableCollectionExtension.cs" />
     <Compile Include="Common\SingleInstanceClass.cs" />
     <Compile Include="Connectivity\BluetoothConnection.cs" />
+    <Compile Include="Converters\BMIToImageConverter.cs" />
+    <Compile Include="Converters\BMIToTextConverter.cs" />
+    <Compile Include="Converters\BoolToConnectedConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\GenderEnumToBoolConverter.cs" />
+    <Compile Include="Converters\ReverseBoolToVisibilityConverter.cs" />
     <Compile Include="Converters\TextToPasswordConverter.cs" />
     <Compile Include="Converters\TextWithUnitConverter.cs" />
     <Compile Include="Converters\TimeToStringConverter.cs" />
@@ -279,6 +284,11 @@
     </Content>
     <Content Include="README_FIRST.txt" />
     <Content Include="Resources\images\back.png" />
+    <Content Include="Resources\images\BMI\bmi1.png" />
+    <Content Include="Resources\images\BMI\bmi2.png" />
+    <Content Include="Resources\images\BMI\bmi3.png" />
+    <Content Include="Resources\images\BMI\bmi4.png" />
+    <Content Include="Resources\images\BMI\bmi5.png" />
     <Content Include="Resources\images\defaultAvatar.jpg" />
     <Content Include="Resources\images\fitness.png" />
     <Content Include="Resources\images\footsteps.png" />

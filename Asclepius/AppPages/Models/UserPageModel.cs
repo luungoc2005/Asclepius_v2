@@ -20,6 +20,7 @@ namespace Asclepius.AppPages.Models
     public class UserPageModel : INotifyPropertyChanged
     {
         AccountsManager manager = AccountsManager.Instance;
+        GadgetHelper gadgetHelper = GadgetHelper.Instance;
         AppUser user;
 
         protected void OnPropertyChanged(string propertyName)
@@ -32,10 +33,26 @@ namespace Asclepius.AppPages.Models
 
         public UserPageModel()
         {
-            if (AppSettings.DefaultUserfile != "")
-            {
-                user = manager.CurrentUser;
-            }
+            user = manager.CurrentUser;
+            gadgetHelper.HeartRateChanged += gadgetHelper_HeartRateChanged;
+            gadgetHelper.TemperatureChanged += gadgetHelper_TemperatureChanged;
+            gadgetHelper.GadgetStateChanged += gadgetHelper_GadgetStateChanged;
+            gadgetHelper.IsEnabled = true;
+        }
+
+        void gadgetHelper_GadgetStateChanged(bool isconnected)
+        {
+            OnPropertyChanged("IsGadgetConnected");
+        }
+
+        void gadgetHelper_TemperatureChanged(float value)
+        {
+            Temperature = Math.Round(value,1);
+        }
+
+        void gadgetHelper_HeartRateChanged(float value)
+        {
+            HeartRate = Convert.ToInt32(value);
         }
 
         public string Birthdate
@@ -43,6 +60,26 @@ namespace Asclepius.AppPages.Models
             get
             {
                 return user.Birthdate.Date.ToShortDateString();
+            }
+        }
+
+        public bool IsGadgetConnected
+        {
+            get
+            {
+                return gadgetHelper.IsConnected;
+            }
+        }
+
+        public bool IsGadgetEnabled
+        {
+            get
+            {
+                return gadgetHelper.IsEnabled;
+            }
+            set
+            {
+                gadgetHelper.IsEnabled = value;
             }
         }
 
@@ -119,6 +156,33 @@ namespace Asclepius.AppPages.Models
             get
             {
                 return user.BMI;
+            }
+        }
+
+        double _temperature; double _heartrate;
+        public double Temperature
+        {
+            get
+            {
+                return _temperature;
+            }
+            set
+            {
+                _temperature=value;
+                OnPropertyChanged("Temperature");
+            }
+        }
+
+        public double HeartRate
+        {
+            get
+            {
+                return _heartrate;
+            }
+            set
+            {
+                _heartrate = value;
+                OnPropertyChanged("HeartRate");
             }
         }
 

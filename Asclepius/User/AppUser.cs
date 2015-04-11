@@ -136,7 +136,8 @@ namespace Asclepius.User
                 }
                 else
                 {
-                    return Snapshots[0].Weight;
+                    int index = Snapshots.FindIndex(snap => snap.Weight != 0); //first instance of non-zero weight
+                    return (index == -1 ? 0 : Snapshots[index].Weight);
                 }
             }
         }
@@ -151,7 +152,8 @@ namespace Asclepius.User
                 }
                 else
                 {
-                    return Snapshots[0].Height;
+                    int index = Snapshots.FindIndex(snap => snap.Height != 0); //first instance of non-zero height
+                    return (index == -1 ? 0 : Snapshots[index].Height);
                 }
             }
         }

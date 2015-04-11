@@ -14,8 +14,19 @@ namespace Asclepius.User
         public double Height { get; set; } //user height in meters
 
         //Device stats
-        public int PulseRate { get; set; }
+        public int HeartRate { get; set; }
         public double Temperature { get; set; } //in Celcius
+
+        public Snapshot()
+        {
+            var user = AccountsManager.Instance.CurrentUser;
+            if (user != null)
+            {
+                //default values=lastest values
+                Weight = user.Weight;
+                Height = user.Height;
+            }
+        }
 
         public static Snapshot FindNearestSnapshot(Record record, AppUser user)
         {
@@ -42,6 +53,14 @@ namespace Asclepius.User
         public double TempInFahrenheit()
         {
             return Temperature * 1.8 + 32;
+        }
+
+        public double BMI
+        {
+            get
+            {
+                return Math.Round(Weight * 10000 / (Height * Height), 1);
+            }
         }
     }
 }

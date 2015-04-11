@@ -12,9 +12,17 @@ namespace Asclepius.AppPages
 {
     public partial class HealthPage : PhoneApplicationPage
     {
+        Models.HealthPageModel Model = new Models.HealthPageModel();
+
         public HealthPage()
         {
             InitializeComponent();
+            this.DataContext = Model;
+        }
+
+        protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
+        {
+            this.NavigationService.Navigate(new Uri("/AppPages/HubPage.xaml", UriKind.Relative));
         }
     }
 }

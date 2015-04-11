@@ -67,5 +67,13 @@ namespace Asclepius.AppPages.UserControls
                 }
             }
         }
+
+        public double Percentage
+        {
+            get
+            {
+                return Math.Min(((double)TotalCalories / (double)_counter.GetDailyCalorieGoal()), 1);
+            }
+        }
     }
 }

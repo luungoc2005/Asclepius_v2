@@ -34,10 +34,11 @@ namespace Asclepius.Connectivity
         private BackgroundWorker dataReadWorker;
 
         public delegate void MessageReceivedHandler(float num1, float num2);
+        public delegate void StateChanged(object sender, bool isconnected);
 
         public event MessageReceivedHandler MessageReceived;
         public event EventHandler BluetoothNotSupported;
-        public event EventHandler Disconnected;
+        public event StateChanged OnStateChanged;
         #endregion
 
         #region "Public methods"
@@ -62,7 +63,7 @@ namespace Asclepius.Connectivity
                 dataReadWorker.CancelAsync();
                 dataReadWorker = null;
             }
-            if (Disconnected != null) Disconnected(this, new EventArgs());
+            if (OnStateChanged != null) OnStateChanged(this, false);
         }
 
         public async Task EnumerateDevices()
@@ -93,7 +94,7 @@ namespace Asclepius.Connectivity
         {
             get
             {
-                return (socket != null);
+                return (socket != null && dataReader != null && dataWriter != null);
             }
         }
 
@@ -114,10 +115,11 @@ namespace Asclepius.Connectivity
                         dataReader = new StreamReader(socket.InputStream.AsStreamForRead());
                         dataWriter = new StreamWriter(socket.OutputStream.AsStreamForWrite());
                         dataReadWorker.RunWorkerAsync();
+                        if (OnStateChanged != null) OnStateChanged(this, true);
                     }
                     else
                     {
-                        MessageBox.Show("Connection failed");
+                        MessageBox.Show("Connection to gadget failed");
                     }
                     //await socket.ConnectAsync(serviceInfo., rfcommService.ConnectionServiceName, SocketProtectionLevel.BluetoothEncryptionAllowNullAuthentication);
                     //dataReader = new DataReader(socket.InputStream);
@@ -126,8 +128,6 @@ namespace Asclepius.Connectivity
                 }
                 catch (Exception)
                 {
-
-                    throw;
                 }
             }
         }

@@ -28,14 +28,19 @@
         </StackPanel>
 
         <Grid Margin="16" HorizontalAlignment="Right" VerticalAlignment="Top">
-            <Border CornerRadius="36" BorderBrush="{StaticResource AvatarChromeBrush}" BorderThickness="2">
-                <Button Style="{StaticResource EmptyHighlightButton}" Click="Button_Click">
-                    <Button.Clip>
-                        <EllipseGeometry Center="36,36" RadiusX="36" RadiusY="36" />
-                    </Button.Clip>
-                    <Image Width="72" Height="72" Source="{Binding UserAvatar, Mode=OneWay}" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                </Button>
-            </Border>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Temperature}" Margin="12,0,0,0" />
+                <TextBlock Text="{Binding HeartRate}" Margin="12,0,0,0" />
+                
+                <Border CornerRadius="36" BorderBrush="{StaticResource AvatarChromeBrush}" BorderThickness="2">
+                    <Button Style="{StaticResource EmptyHighlightButton}" Click="Button_Click">
+                        <Button.Clip>
+                            <EllipseGeometry Center="36,36" RadiusX="36" RadiusY="36" />
+                        </Button.Clip>
+                        <Image Width="72" Height="72" Source="{Binding UserAvatar, Mode=OneWay}" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    </Button>
+                </Border>
+            </StackPanel>
         </Grid>
 
         <Grid x:Name="ContentPanel" Grid.Row="1">
@@ -50,8 +55,8 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
             <UserControls:StepsButton Grid.Row="1" x:Name="stepsButton" />
-            <UserControls:CaloriesButton Grid.Row="1" x:Name="caloriesButton" Grid.Column="1" />
-            <UserControls:GadgetButton  Grid.Row="0" Grid.ColumnSpan="2"/>
+            <UserControls:CaloriesButton Percentage="{Binding Percentage}" Grid.Row="1" x:Name="caloriesButton" Grid.Column="1" />
+            <UserControls:GadgetButton  Grid.Row="0" Grid.ColumnSpan="2" ButtonClick="GadgetButton_ButtonClick"/>
             <UserControls:FriendsButton Grid.Column="1" Grid.Row="2"/>
             <UserControls:WorkoutButton Grid.RowSpan="2" Grid.Row="2"/>
         </Grid>

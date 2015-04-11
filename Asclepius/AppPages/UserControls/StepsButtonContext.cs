@@ -44,5 +44,13 @@ namespace Asclepius.AppPages.UserControls
                 return tempList.Sum((Record r) => { return r.WalkingStepCount + r.RunningStepCount; });
             }
         }
+
+        public double Percentage
+        {
+            get
+            {
+                return Math.Min(((double)TotalSteps / 10000), 1);
+            }
+        }
     }
 }

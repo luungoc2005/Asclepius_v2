@@ -16,8 +16,10 @@ namespace Asclepius.Helpers
         private static Object _syncRoot = new Object();
         
         public delegate void ValueReceivedHandler(float value);
+        public delegate void StateChangedHandler(bool isconnected);
         public event ValueReceivedHandler TemperatureChanged;
         public event ValueReceivedHandler HeartRateChanged;
+        public event StateChangedHandler GadgetStateChanged;
 
         private bool _isEnabled;
         public bool IsEnabled
@@ -42,17 +44,29 @@ namespace Asclepius.Helpers
         {
             bluetooth = new Connectivity.BluetoothConnection();
             bluetooth.MessageReceived += bluetooth_MessageReceived;
-            bluetooth.Disconnected += bluetooth_Disconnected;
+            bluetooth.OnStateChanged += bluetooth_OnStateChanged;
 
             updateTimer = new DispatcherTimer();
             updateTimer.Interval = TimeSpan.FromSeconds(3);
             updateTimer.Tick += updateTimer_Tick;
-            updateTimer.Start();
+            if (IsEnabled) updateTimer.Start();
         }
 
-        void bluetooth_Disconnected(object sender, EventArgs e)
+        void bluetooth_OnStateChanged(object sender, bool isconnected)
         {
-            updateTimer.Start();
+            if (!isconnected)
+            {
+                updateTimer.Start();
+            }
+            if (GadgetStateChanged != null) GadgetStateChanged(isconnected);
+        }
+
+        public bool IsConnected
+        {
+            get
+            {
+                return bluetooth.IsConnected;
+            }
         }
 
         public static GadgetHelper Instance
@@ -95,15 +109,49 @@ namespace Asclepius.Helpers
 
         float[] _samples = new float[10];
         int _count = 0;
-        float squaredSum = 0;
 
         void bluetooth_MessageReceived(float num1, float num2)
         {
             if (TemperatureChanged != null) TemperatureChanged(num1);
 
+            //fill the array
+            _samples[_count] = num2;
+            _count += 1;
+            if (_count == _samples.Length) _count = 0;
 
 
-            if (HeartRateChanged != null) HeartRateChanged(num2);
+            if (HeartRateChanged != null)
+            {
+                float _sumOfSamples = 0;
+                float _countOfSamples = 0;
+                float _average = 0;
+                float _variance = 0;
+
+                for (int i = 0; i < _samples.Length; i++)
+                {
+                    _sumOfSamples += _samples[i];
+                    if (_samples[i] != 0) _countOfSamples += 1;
+                }
+                _average = _sumOfSamples / _countOfSamples;
+
+                _countOfSamples = 0;
+                for (int i = 0; i < _samples.Length; i++)
+                {
+                    _variance += (i+1) * (_samples[i] - _average) * (_samples[i] - _average); //weighted variance
+                    _countOfSamples += i;
+                }
+                _variance = _variance / _countOfSamples;
+
+                if (_variance < 25) 
+                {
+                    HeartRateChanged(num2);
+                } //std.var within 5
+                else
+                {
+                    //trash value
+                    HeartRateChanged(0);
+                }
+            }
         }
     }
 }

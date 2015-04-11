@@ -67,8 +67,8 @@ namespace Asclepius.Helpers
                     record.StartDate = date;
 
                     User.Snapshot snapshot = User.Snapshot.FindNearestSnapshot(record, _user);
-                    return (int)((double)RawBMR(_user.UserGender, snapshot.Weight, snapshot.Height, Common.CommonMethods.CalcAge(record.StartDate, _user.Birthdate)) / 24
-                        * GetHBMultiplier(_user.UserActivityLevel));
+                    return (int)((double)RawBMR(_user.UserGender, snapshot.Weight, snapshot.Height, Common.CommonMethods.CalcAge(record.StartDate, _user.Birthdate)) / 24);
+                        //* GetHBMultiplier(_user.UserActivityLevel));
                 }
             }
         }
@@ -109,7 +109,7 @@ namespace Asclepius.Helpers
 
         public int AdjustedBMR(User.Record record)
         {
-            return (int)(CalcBMR(record) * GetHBMultiplier(record.ActivityLevel));
+            return (int)(CalcBMR(record)); //* GetHBMultiplier(record.ActivityLevel));
         }
 
         public double GetHBMultiplier(User.AppUser.ActivityLevel level)
@@ -135,9 +135,14 @@ namespace Asclepius.Helpers
         {
             User.Snapshot snapshot = User.Snapshot.FindNearestSnapshot(record, _user);
             double Time = ((double)(record.WalkTime + record.RunTime) / 3600);
-            if (Time == 0) return 0;
+            if (Time <= 0.0013888888888889) return 0; //5 seconds
             double KPH = Common.CommonMethods.CalcDistance((uint)(record.WalkingStepCount+record.RunningStepCount), _user.StepLength) / Time;
             return (int)Math.Round((0.0215 * KPH * KPH * KPH - 0.1765 * KPH * KPH + 0.8710 * KPH + 1.4577) * snapshot.Weight * Time);
+        }
+
+        public int GetDailyCalorieGoal()
+        {
+            return (int)(RawBMR(_user.UserGender, _user.Weight, _user.Height, _user.Age) * GetHBMultiplier(_user.UserActivityLevel));
         }
 
         //per day

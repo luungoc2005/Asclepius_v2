@@ -5,10 +5,14 @@
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-    xmlns:toolkitPrimitives="clr-namespace:Microsoft.Phone.Controls.Primitives;assembly=Microsoft.Phone.Controls">
+    xmlns:toolkitPrimitives="clr-namespace:Microsoft.Phone.Controls.Primitives;assembly=Microsoft.Phone.Controls"
+    xmlns:Converters="clr-namespace:Asclepius.Converters">
 
     <!--Application Resources-->
     <Application.Resources>
+        <Converters:BMIToImageConverter x:Key="BMIToImageConverter"/>
+        <Converters:BMIToTextConverter x:Key="BMIToTextConverter"/>
+        <Converters:TextWithUnitConverter x:Key="TextWithUnitConverter" />
         <local:LocalizedStrings xmlns:local="clr-namespace:Asclepius" x:Key="LocalizedStrings"/>
         <SolidColorBrush x:Key="TextSpecialForeground" Color="#FF005209"/>
         <SolidColorBrush x:Key="TextSpecialForeground2" Color="#FF7D7D7D"/>
@@ -640,6 +644,70 @@
                                 <Image Width="128" Height="128" Source="{Binding Path=UserAvatar, Mode=OneWay}" />
                                 <TextBlock Text="{Binding Path=Username}" Margin="12,0,12,0" FontSize="30" />
                                 <!--<ContentControl x:Name="ContentContainer" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>-->
+                            </StackPanel>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="SnapshotsListItem" TargetType="ListBoxItem">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="VerticalContentAlignment" Value="Top"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <Border x:Name="LayoutRoot" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                                Padding="3">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal"/>
+                                    <VisualState x:Name="MouseOver"/>
+                                    <VisualState x:Name="Disabled">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="LayoutRoot">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TransparentBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <DoubleAnimation Duration="0" To=".5" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="ContentContainer"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                                <VisualStateGroup x:Name="SelectionStates">
+                                    <VisualState x:Name="Unselected"/>
+                                    <VisualState x:Name="Selected">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames
+                                                    Storyboard.TargetName="border"
+                                                    Storyboard.TargetProperty="Background"
+                                                    Duration="0">
+                                                <DiscreteObjectKeyFrame  KeyTime="0" Value="{StaticResource GreyButtonPressedBrush}">
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames
+                                                    Storyboard.TargetName="LayoutRoot"
+                                                    Storyboard.TargetProperty="BorderBrush"
+                                                    Duration="0">
+                                                <DiscreteObjectKeyFrame  KeyTime="0" Value="{StaticResource ButtonBorderBrush}">
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <StackPanel x:Name="border" Orientation="Horizontal">
+                                <Image Width="128" Height="128" Source="{Binding Path=BMI, Converter={StaticResource BMIToImageConverter}}" />
+                                <StackPanel Margin="12,0,0,0" Orientation="Vertical">
+                                    <TextBlock Text="{Binding Path=DateTaken}" FontWeight="SemiBold" FontSize="30" />
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Weight:" />
+                                        <TextBlock Margin="8,0,0,0" Text="{Binding Path=Weight,Converter={StaticResource TextWithUnitConverter},ConverterParameter='kg'}" />
+                                        <TextBlock Margin="12,0,0,0" Text="Height:" />
+                                        <TextBlock Margin="8,0,0,0" Text="{Binding Path=Height,Converter={StaticResource TextWithUnitConverter},ConverterParameter='cm'}" />                                        
+                                    </StackPanel>
+                                </StackPanel>
                             </StackPanel>
                         </Border>
                     </ControlTemplate>

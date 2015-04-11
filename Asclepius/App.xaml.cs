@@ -120,6 +120,7 @@ namespace Asclepius
                 // An unhandled exception has occurred; break into the debugger
                 Debugger.Break();
             }
+            e.Handled = true; //ignore
         }
 
         #region Phone application initialization
