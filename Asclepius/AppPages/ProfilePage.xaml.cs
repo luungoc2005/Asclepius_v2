@@ -38,6 +38,7 @@ namespace Asclepius.AppPages
 
         protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
         {
+            e.Cancel = true;
             this.NavigationService.Navigate(new Uri("/AppPages/HubPage.xaml", UriKind.Relative));
         }
 

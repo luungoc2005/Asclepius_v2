@@ -107,6 +107,12 @@ namespace Asclepius.Helpers
             447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age));
         }
 
+        public int RawBMR()
+        {
+            var user = User.AccountsManager.Instance.CurrentUser;
+            return (user == null ? 0 : RawBMR(user.UserGender, _user.Weight, _user.Height, _user.Age));
+        }
+
         public int AdjustedBMR(User.Record record)
         {
             return (int)(CalcBMR(record)); //* GetHBMultiplier(record.ActivityLevel));

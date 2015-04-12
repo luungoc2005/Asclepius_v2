@@ -56,7 +56,7 @@ namespace Asclepius.Helpers
             _pollTimer.Start();
 
             _reportTimer = new DispatcherTimer();
-            _reportTimer.Interval = TimeSpan.FromSeconds(1);
+            _reportTimer.Interval = TimeSpan.FromSeconds(30);
             _reportTimer.Tick += _reportTimer_Tick;
             _reportTimer.Start();
         }

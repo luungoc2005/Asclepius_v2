@@ -20,7 +20,7 @@ namespace Asclepius.User
         public int RunningStepCount { get; set; }
         public uint RunTime { get; set; }
         public uint WalkTime { get; set; }
-        public int ActivityType { get; set; } //placeholder, default 0 is walking
+        public byte ActivityType { get; set; } //placeholder, default 0 is walking
         public User.AppUser.ActivityLevel ActivityLevel { get; set; }
 
         //Constructor
@@ -34,7 +34,7 @@ namespace Asclepius.User
             }
         }
 
-        public Record(DateTime _start, DateTime _end, double _length = 0, int _type = 0)
+        public Record(DateTime _start, DateTime _end, double _length = 0, byte _type = 0)
         {
             this.StartDate = _start;
             this.EndDate = _end;
@@ -62,6 +62,23 @@ namespace Asclepius.User
             ret.WalkingStepCount = r1.WalkingStepCount + r2.WalkingStepCount;
             ret.RunningStepCount = r1.RunningStepCount + r2.RunningStepCount;
             return ret;
+        }
+
+        //Readonly Properties
+        public string ActivityDescription
+        {
+            get
+            {
+                return Common.CommonMethods.activityTypes[ActivityType].description;
+            }
+        }
+
+        public uint Duration
+        {
+            get
+            {
+                return WalkTime + RunTime;
+            }
         }
 
         //Converters

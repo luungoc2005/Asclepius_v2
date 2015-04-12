@@ -17,6 +17,7 @@ namespace Asclepius.AppPages
             InitializeComponent();
             this.DataContext = dayModel;
             dayModel.SelectedUser = User.AccountsManager.Instance.CurrentUser;
+            weekModel.SelectedUser = User.AccountsManager.Instance.CurrentUser;
             UpdateAppBar();
         }
 
@@ -90,5 +91,12 @@ namespace Asclepius.AppPages
                     break;
             }
         }
+
+        protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = true;
+            this.NavigationService.Navigate(new Uri("/AppPages/HubPage.xaml", UriKind.Relative));
+        }
+
     }
 }

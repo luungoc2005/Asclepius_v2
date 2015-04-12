@@ -39,5 +39,12 @@ namespace Asclepius.AppPages
                 catch { }
             }
         }
+
+        protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = true;
+            this.NavigationService.Navigate(new Uri("/AppPages/LoginPage.xaml", UriKind.Relative));
+        }
+
     }
 }

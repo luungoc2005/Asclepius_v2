@@ -22,6 +22,7 @@ namespace Asclepius.AppPages
 
         protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
         {
+            e.Cancel = true;
             if ((User.AccountsManager.Instance).listFiles().Length == 0)
             {
                 Common.CommonMethods.PromptExitApplication();

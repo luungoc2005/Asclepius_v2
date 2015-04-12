@@ -47,7 +47,7 @@ namespace Asclepius.Helpers
             bluetooth.OnStateChanged += bluetooth_OnStateChanged;
 
             updateTimer = new DispatcherTimer();
-            updateTimer.Interval = TimeSpan.FromSeconds(3);
+            updateTimer.Interval = TimeSpan.FromSeconds(5);
             updateTimer.Tick += updateTimer_Tick;
             if (IsEnabled) updateTimer.Start();
         }
