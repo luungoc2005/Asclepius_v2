@@ -14,15 +14,28 @@ namespace Asclepius.AppPages.UserControls
     public partial class CaloriesButton : UserControl
     {
         public event EventHandler ButtonClick;
+        DispatcherTimer updateTimer = new DispatcherTimer();
 
         public CaloriesButton()
         {
             InitializeComponent();
 
-            DispatcherTimer updateTimer=new DispatcherTimer();
-            updateTimer.Interval=TimeSpan.FromMilliseconds(500);
+            updateTimer.Interval=TimeSpan.FromMilliseconds(100);
             updateTimer.Tick+=updateTimer_Tick;
             updateTimer.Start();
+        }
+
+        public bool IsUpdating
+        {
+            get
+            {
+                return updateTimer.IsEnabled;
+            }
+            set
+            {
+                if (value) updateTimer.Start();
+                else updateTimer.Stop();
+            }
         }
 
         void updateTimer_Tick(object sender, EventArgs e)

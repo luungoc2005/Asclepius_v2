@@ -113,14 +113,19 @@ namespace Asclepius.AppPages.Models
 
         public bool IsPreviousAvailable()
         {
-            DateTime selectedWeek = FirstDayOfWeek(DateTime.Now - (TimeSpan.FromDays(7 * (_day + 1))));
-
-            for (int i = 0; i < 7; i++)
+            DateTime selectedWeek = LastDayOfWeek(DateTime.Now - (TimeSpan.FromDays(7 * (_day + 1))));
+            //DateTime _date = DateTime.Now - TimeSpan.FromDays(SelectedDay + 1);
+            foreach (DailyRecord r in SelectedUser.DailyRecords)
             {
-                if (SelectedUser.FindRecord(selectedWeek + TimeSpan.FromDays(i), true) != null) return true;
+                if (r.Date <= selectedWeek) return true;
             }
-
             return false;
+            //for (int i = 0; i < 7; i++)
+            //{
+            //    if (SelectedUser.FindRecord(selectedWeek + TimeSpan.FromDays(i), true) != null) return true;
+            //}
+
+            //return false;
         }
 
         private void UpdateData()
@@ -147,11 +152,19 @@ namespace Asclepius.AppPages.Models
                     for (int a = 0; a < 24; a++)
                     {
                         var hrec = record.GetHourlyRecord(a, true);
-                        int walking = (hrec == null ? 0 : _counter.GetWalkingCalorieBurn(hrec));
+                        int walking = (hrec == null || hrec.ActivityType != 0 ? 0 : _counter.GetWalkingCalorieBurn(hrec));
                         int hourly = (hrec == null ? ((startDate.Date == DateTime.Now.Date && a > DateTime.Now.Hour) ? 0 : _counter.CalcHourlyBMR(startDate)) : _counter.AdjustedBMR(hrec));
+
                         areaChartData[i].value2 += hourly + walking;
                         
                         startDate += TimeSpan.FromHours(1);
+                    }
+
+                    foreach (Record hrec in record.Records)
+                    {
+                        int activity = (hrec == null || hrec.ActivityType == 0 ? 0 : (int)((double)_counter.RawBMR() * 1.157407407407407e-5 * (double)hrec.WalkTime
+                        * hrec.RealActivity.metaEquivalent)); //BMR per second
+                        areaChartData[i].value2 += activity;
                     }
                 }
             }

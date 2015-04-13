@@ -23,7 +23,7 @@
                     <RowDefinition />
                     <RowDefinition Height="48" />
                 </Grid.RowDefinitions>
-                <Border x:Name="barCore" Background="#FFD71F00" Grid.RowSpan="1" VerticalAlignment="Bottom" />
+                <Border x:Name="barCore" Grid.RowSpan="2" Background="#FFD71F00" VerticalAlignment="Bottom" />
                 <Image Grid.RowSpan="2" Width="96" Height="96" Source="/Resources/images/fitness.png" />
                 <Border Grid.Row="1" Background="{StaticResource OverlayBrush1}" BorderBrush="{StaticResource ButtonBorderBrush}" BorderThickness="4,0,0,0">
                     <StackPanel Margin="8,0,0,0" HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Center">

@@ -118,31 +118,10 @@ namespace Asclepius.Helpers
             _samples[_count] = num2;
             _count += 1;
             if (_count == _samples.Length) _count = 0;
-
-
+            
             if (HeartRateChanged != null)
             {
-                float _sumOfSamples = 0;
-                float _countOfSamples = 0;
-                float _average = 0;
-                float _variance = 0;
-
-                for (int i = 0; i < _samples.Length; i++)
-                {
-                    _sumOfSamples += (i + 1) * _samples[i];
-                    if (_samples[i] != 0) _countOfSamples += (i + 1);
-                }
-                _average = _sumOfSamples / _countOfSamples;
-
-                _countOfSamples = 0;
-                for (int i = 0; i < _samples.Length; i++)
-                {
-                    _variance += (i+1) * (_samples[i] - _average) * (_samples[i] - _average); //weighted variance
-                    _countOfSamples += (i + 1);
-                }
-                _variance = _variance / _countOfSamples;
-
-                if (_variance < 25) 
+                if (Common.CommonMethods.WeightedVariance(_samples) < 25) 
                 {
                     HeartRateChanged(num2);
                 } //std.var within 5

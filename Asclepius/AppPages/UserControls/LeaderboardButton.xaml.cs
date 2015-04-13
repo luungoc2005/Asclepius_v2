@@ -10,7 +10,7 @@ using Microsoft.Phone.Shell;
 
 namespace Asclepius.AppPages.UserControls
 {
-    public partial class FriendsButton : UserControl
+    public partial class LeaderboardButton : UserControl
     {
         public event EventHandler ButtonClick;
 
@@ -19,10 +19,9 @@ namespace Asclepius.AppPages.UserControls
             if (ButtonClick != null) ButtonClick(sender, e);
         }
 
-        public FriendsButton()
+        public LeaderboardButton()
         {
             InitializeComponent();
         }
-
     }
 }

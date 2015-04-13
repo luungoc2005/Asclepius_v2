@@ -100,6 +100,9 @@
     <Compile Include="AppPages\CaloriesPage.xaml.cs">
       <DependentUpon>CaloriesPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AppPages\FriendsPage.xaml.cs">
+      <DependentUpon>FriendsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AppPages\HealthPage.xaml.cs">
       <DependentUpon>HealthPage.xaml</DependentUpon>
     </Compile>
@@ -149,6 +152,9 @@
     <Compile Include="AppPages\UserControls\GadgetButton.xaml.cs">
       <DependentUpon>GadgetButton.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AppPages\UserControls\LeaderboardButton.xaml.cs">
+      <DependentUpon>LeaderboardButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AppPages\UserControls\ProgressRing.cs" />
     <Compile Include="AppPages\UserControls\StepsButton.xaml.cs">
       <DependentUpon>StepsButton.xaml</DependentUpon>
@@ -157,6 +163,7 @@
     <Compile Include="AppPages\UserControls\WorkoutButton.xaml.cs">
       <DependentUpon>WorkoutButton.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AppPages\UserControls\WorkoutButtonContext.cs" />
     <Compile Include="AppPages\WorkoutPage.xaml.cs">
       <DependentUpon>WorkoutPage.xaml</DependentUpon>
     </Compile>
@@ -167,6 +174,8 @@
     <Compile Include="Common\ObservableCollectionExtension.cs" />
     <Compile Include="Common\SingleInstanceClass.cs" />
     <Compile Include="Connectivity\BluetoothConnection.cs" />
+    <Compile Include="Connectivity\UDPClient.cs" />
+    <Compile Include="Connectivity\UDPClientFinder.cs" />
     <Compile Include="Converters\BMIToImageConverter.cs" />
     <Compile Include="Converters\BMIToTextConverter.cs" />
     <Compile Include="Converters\BoolToConnectedConverter.cs" />
@@ -188,8 +197,9 @@
     <Compile Include="Helpers\Microsoft\ApplicationSettingHelper.cs" />
     <Compile Include="Helpers\Microsoft\RelativeAnimatingContentControl.cs" />
     <Compile Include="Helpers\Microsoft\Simple3DVector.cs" />
-    <Compile Include="Helpers\SocialFunctionsHelper.cs" />
+    <Compile Include="Helpers\SocialHelper.cs" />
     <Compile Include="Helpers\StepCounterHelper.cs" />
+    <Compile Include="Helpers\UDPHelper.cs" />
     <Compile Include="LocalizedStrings.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -216,6 +226,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AppPages\CaloriesPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppPages\FriendsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -256,6 +270,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AppPages\UserControls\GadgetButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppPages\UserControls\LeaderboardButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -331,6 +349,7 @@
     <Content Include="Resources\images\footsteps.png" />
     <Content Include="Resources\images\friends.png" />
     <Content Include="Resources\images\heartrate.png" />
+    <Content Include="Resources\images\list.png" />
     <Content Include="Resources\images\next.png" />
     <Content Include="Resources\images\workout.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Add.png" />

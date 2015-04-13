@@ -96,7 +96,7 @@
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
                                 <TextBlock Grid.Row="0" Text="Sharing Status" FontWeight="SemiBold" />
-                                <toolkit:ToggleSwitch Grid.Row="1" Header="Enable sharing" HeaderTemplate="{StaticResource ToggleSwitchHeaderTemplate}" />
+                                <toolkit:ToggleSwitch Grid.Row="1" Header="Enable sharing" HeaderTemplate="{StaticResource ToggleSwitchHeaderTemplate}" IsChecked="{Binding Path=IsUDPEnabled, Mode=TwoWay}" />
                             </Grid>
                         </Button>
                     </Border>

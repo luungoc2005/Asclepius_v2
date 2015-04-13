@@ -254,6 +254,32 @@ namespace Asclepius.User
                 }
             }
         }
+
+        //http://en.wikipedia.org/wiki/Heart_rate
+        public double MaxHeartRate
+        {
+            get
+            {
+                if (UserGender == Gender.Female)
+                {
+                    //HRmax = 206 − (0.88 × age)
+                    return (int)(206 - (0.88 * Age));
+                }
+                else
+                {
+                    //HRmax = 205.8 − (0.685 × age)
+                    return (int)(205.8 - (0.685 * Age));
+                }
+            }
+        }
+
+        public double ReserveHeartRate
+        {
+            get
+            {
+                return (HeartRate == 0 ? 0 : MaxHeartRate - HeartRate); //if HR=0 then reserve is useless
+            }
+        }
         #endregion
 
         #region "Social"

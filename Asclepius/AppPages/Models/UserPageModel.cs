@@ -21,6 +21,7 @@ namespace Asclepius.AppPages.Models
     {
         AccountsManager manager = AccountsManager.Instance;
         GadgetHelper gadgetHelper = GadgetHelper.Instance;
+        UDPHelper udpHelper = UDPHelper.Instance;
         AppUser user;
 
         protected void OnPropertyChanged(string propertyName)
@@ -38,6 +39,24 @@ namespace Asclepius.AppPages.Models
             gadgetHelper.TemperatureChanged += gadgetHelper_TemperatureChanged;
             gadgetHelper.GadgetStateChanged += gadgetHelper_GadgetStateChanged;
             gadgetHelper.IsEnabled = true;
+            udpHelper.UDPStateChanged += udpHelper_UDPStateChanged;
+        }
+
+        void udpHelper_UDPStateChanged(bool isconnected)
+        {
+            OnPropertyChanged("IsUDPEnabled");
+        }
+
+        public bool IsUDPEnabled
+        {
+            get
+            {
+                return udpHelper.IsDiscoveryEnabled;
+            }
+            set
+            {
+                udpHelper.IsDiscoveryEnabled = value;
+            }
         }
 
         void gadgetHelper_GadgetStateChanged(bool isconnected)

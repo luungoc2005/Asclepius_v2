@@ -33,6 +33,8 @@ namespace Asclepius.AppPages.Models
         }
 
         double _heartrate;
+        float[] _samples = new float[20];
+        int _count = 0;
         public double HeartRate
         {
             get
@@ -41,7 +43,13 @@ namespace Asclepius.AppPages.Models
             }
             set
             {
-                _heartrate = value;
+                if (_heartrate == 0 || value < _heartrate) _heartrate = value;
+                _samples[_count] = (float)value;
+                _count += 1;
+                if (_count == _samples.Length) _count = 0;
+
+                float _min = _samples.Min();
+                _heartrate = (_min == 0 ? ((_heartrate == 0 || value < _heartrate) ? value : _heartrate) : _min);
                 OnPropertyChanged("HeartRate");
                 OnPropertyChanged("IsHeartUpdating");
             }

@@ -65,6 +65,12 @@ namespace Asclepius.AppPages.UserControls
                         startDate += TimeSpan.FromHours(1);
                     }
 
+                    foreach (Record hrec in record.Records)
+                    {
+                        int activity = (hrec == null || hrec.ActivityType == 0 ? 0 : (int)((double)_counter.RawBMR() * 1.157407407407407e-5 * (double)hrec.WalkTime
+                        * hrec.RealActivity.metaEquivalent)); //BMR per second
+                        total += activity;
+                    }
                     return total;
                 }
             }

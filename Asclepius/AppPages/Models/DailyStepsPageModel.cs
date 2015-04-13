@@ -133,7 +133,13 @@ namespace Asclepius.AppPages.Models
 
         public bool IsPreviousAvailable()
         {
-            return SelectedUser.FindRecord(DateTime.Now - TimeSpan.FromDays(SelectedDay + 1),true) != null;
+            //return SelectedUser.FindRecord(DateTime.Now - TimeSpan.FromDays(SelectedDay + 1),true) != null;
+            DateTime _date = DateTime.Now - TimeSpan.FromDays(SelectedDay + 1);
+            foreach (DailyRecord r in SelectedUser.DailyRecords)
+            {
+                if (r.Date <= _date) return true;
+            }
+            return false;
         }
 
         private void UpdateData()

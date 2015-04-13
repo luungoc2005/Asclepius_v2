@@ -11,7 +11,7 @@ namespace Asclepius.Converters
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            if (value is DateTime) return (String.Format("00", ((DateTime)value).Hour) + ":" + String.Format("00", ((DateTime)value).Minute));
+            if (value is DateTime) return ((DateTime)value).TimeOfDay.ToString();
             else return "";
         }
 

@@ -97,5 +97,30 @@ namespace Asclepius.Common
             if (now.Month < birthDate.Month || (now.Month == birthDate.Month && now.Day < birthDate.Day)) age--;
             return age;
         }
+
+        public static float WeightedVariance(float[] _samples)
+        {
+            float _sumOfSamples = 0;
+            float _countOfSamples = 0;
+            float _average = 0;
+            float _variance = 0;
+
+            for (int i = 0; i < _samples.Length; i++)
+            {
+                _sumOfSamples += (i + 1) * _samples[i];
+                if (_samples[i] != 0) _countOfSamples += (i + 1);
+            }
+            _average = _sumOfSamples / _countOfSamples;
+
+            _countOfSamples = 0;
+            for (int i = 0; i < _samples.Length; i++)
+            {
+                _variance += (i + 1) * (_samples[i] - _average) * (_samples[i] - _average); //weighted variance
+                _countOfSamples += (i + 1);
+            }
+            _variance = _variance / _countOfSamples;
+
+            return _variance;
+        }
     }
 }

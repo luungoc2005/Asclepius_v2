@@ -31,7 +31,7 @@ namespace Asclepius.AppPages.Models
         {
             OnPropertyChanged("IsGadgetConnected");
         }
-
+        
         void gadgetHelper_HeartRateChanged(float value)
         {
             HeartRate = Convert.ToInt32(value);
@@ -104,6 +104,7 @@ namespace Asclepius.AppPages.Models
             workoutTimer.Interval = TimeSpan.FromSeconds(1);
             workoutTimer.Tick += workoutTimer_Tick;
             _record = new User.Record();
+            _record.StartRecord();
             _counter = new Helpers.CaloriesCounterHelper(User.AccountsManager.Instance.CurrentUser);
             gadgetHelper.HeartRateChanged += gadgetHelper_HeartRateChanged;
             gadgetHelper.GadgetStateChanged += gadgetHelper_GadgetStateChanged;
@@ -114,6 +115,24 @@ namespace Asclepius.AppPages.Models
                 heartChartData.Add(new ValuePair(i, 0));
             }
 
+            var _user = User.AccountsManager.Instance.CurrentUser;
+            if (_user != null)
+            {
+                bool _bFound = false;
+                foreach (User.DailyRecord daily in _user.DailyRecords)
+                {
+                    if (_bFound) break;
+                    foreach (User.Record record in daily.Records)
+                    {
+                        if (record.ActivityType != 0)
+                        {
+                            SelectedIndex = ActivityTypes.FindIndex(r => r.Equals(Common.CommonMethods.activityTypes[record.ActivityType]));
+                            _bFound = true;
+                            break;
+                        }
+                    }
+                }
+            }
         }
 
         public void StartWorkout()
@@ -290,7 +309,7 @@ namespace Asclepius.AppPages.Models
         public void SaveRecord()
         {
             var user = User.AccountsManager.Instance.CurrentUser;
-            _record.EndDate = DateTime.Now;
+            _record.StopRecord();
             if (user != null)
             {
                 user.Today.Records.Insert(0, _record);

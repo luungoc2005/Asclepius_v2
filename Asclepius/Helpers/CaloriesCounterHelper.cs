@@ -109,8 +109,7 @@ namespace Asclepius.Helpers
 
         public int RawBMR()
         {
-            var user = User.AccountsManager.Instance.CurrentUser;
-            return (user == null ? 0 : RawBMR(user.UserGender, _user.Weight, _user.Height, _user.Age));
+            return (_user == null ? 0 : RawBMR(_user.UserGender, _user.Weight, _user.Height, _user.Age));
         }
 
         public int AdjustedBMR(User.Record record)

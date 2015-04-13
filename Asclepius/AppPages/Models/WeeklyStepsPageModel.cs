@@ -111,14 +111,21 @@ namespace Asclepius.AppPages.Models
 
         public bool IsPreviousAvailable()
         {
-            DateTime selectedWeek = FirstDayOfWeek(DateTime.Now - (TimeSpan.FromDays(7 * (_day + 1))));
-
-            for (int i = 0; i < 7; i++)
+            DateTime selectedWeek = LastDayOfWeek(DateTime.Now - (TimeSpan.FromDays(7 * (_day + 1))));
+            //DateTime _date = DateTime.Now - TimeSpan.FromDays(SelectedDay + 1);
+            foreach (DailyRecord r in SelectedUser.DailyRecords)
             {
-                if (SelectedUser.FindRecord(selectedWeek + TimeSpan.FromDays(i), true) != null) return true;
+                if (r.Date <= selectedWeek) return true;
             }
-
             return false;
+            //DateTime selectedWeek = FirstDayOfWeek(DateTime.Now - (TimeSpan.FromDays(7 * (_day + 1))));
+
+            //for (int i = 0; i < 7; i++)
+            //{
+            //    if (SelectedUser.FindRecord(selectedWeek + TimeSpan.FromDays(i), true) != null) return true;
+            //}
+
+            //return false;
         }
 
         private void UpdateData()

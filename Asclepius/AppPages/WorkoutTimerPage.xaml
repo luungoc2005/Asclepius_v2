@@ -72,7 +72,7 @@
             <Border Background="Black" Opacity="0.5" />
             <StackPanel Background="White" VerticalAlignment="Center" Visibility="{Binding WorkoutStarted, Converter={StaticResource ReverseBooleanToVisibilityConverter}}">
                 <TextBlock Text="Choose an activity type" FontWeight="SemiBold" TextAlignment="Center" Margin="0,12" />
-                <ListBox Height="450" ItemsSource="{Binding ActivityTypes}" SelectedIndex="{Binding SelectedIndex,Mode=TwoWay}" ItemContainerStyle="{StaticResource ActivitiesListItem}" />
+                <ListBox Height="450" ItemsSource="{Binding ActivityTypes}" SelectedIndex="{Binding SelectedIndex,Mode=TwoWay}" ItemContainerStyle="{StaticResource ActivitiesListItem}" SelectionChanged="ListBox_SelectionChanged" />
                 <Button Content="Start" Click="Button_Click" Visibility="{Binding SelectedActivity, Converter={StaticResource IsNullToVisibilityConverter}}" />
                 <Button Grid.Column="1" Content="Cancel" Style="{StaticResource BlueButton}" Click="Button_Click_2" />
             </StackPanel>

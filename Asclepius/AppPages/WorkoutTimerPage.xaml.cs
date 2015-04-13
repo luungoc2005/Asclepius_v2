@@ -69,5 +69,13 @@ namespace Asclepius.AppPages
                 Model.StartWorkoutTimer();
             }
         }
+
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender is ListBox && ((ListBox)sender).SelectedItem != null)
+            {
+                ((ListBox)sender).ScrollIntoView(((ListBox)sender).SelectedItem);
+            }
+        }
     }
 }

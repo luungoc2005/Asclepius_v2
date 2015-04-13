@@ -81,6 +81,14 @@ namespace Asclepius.User
             }
         }
 
+        public Common.CommonMethods.ActivityType RealActivity
+        {
+            get
+            {
+                return Common.CommonMethods.activityTypes[ActivityType];
+            }
+        }
+
         //Converters
 
         public double Distance() //do not use

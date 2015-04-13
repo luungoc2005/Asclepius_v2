@@ -101,7 +101,7 @@
                                     </Grid.RowDefinitions>
                                     <TextBlock Text="Measured heart rate" FontWeight="SemiBold" />
                                     <StackPanel Grid.Row="1" Orientation="Horizontal">
-                                        <TextBlock Text="Current heart rate:" Foreground="{StaticResource TextSpecialForeground2}" />
+                                        <TextBlock Text="Lowest heart rate:" Foreground="{StaticResource TextSpecialForeground2}" />
                                         <TextBlock Text="{Binding HeartRate, ConverterParameter=BPM, Converter={StaticResource TextWithUnitConverter}}" Foreground="{StaticResource TextSpecialForeground2}" Margin="8,0,0,0" Visibility="{Binding IsHeartUpdating, Converter={StaticResource ReverseBooleanToVisibilityConverter}}" />
                                         <TextBlock Margin="8,0,0,0" Text="waiting" Foreground="{StaticResource TextSpecialForeground2}" Visibility="{Binding IsHeartUpdating, Converter={StaticResource BooleanToVisibilityConverter}}" />
                                         <ProgressBar Width="80" IsIndeterminate="True" Foreground="{StaticResource TextSpecialForeground2}" Visibility="{Binding IsHeartUpdating, Converter={StaticResource BooleanToVisibilityConverter}}" />

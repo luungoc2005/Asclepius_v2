@@ -57,8 +57,9 @@
             <UserControls:StepsButton Percentage="{Binding Percentage}" Grid.Row="1" x:Name="stepsButton" />
             <UserControls:CaloriesButton Percentage="{Binding Percentage}" Grid.Row="1" x:Name="caloriesButton" Grid.Column="1" />
             <UserControls:GadgetButton  Grid.Row="0" Grid.ColumnSpan="2" ButtonClick="GadgetButton_ButtonClick"/>
-            <UserControls:FriendsButton Grid.Column="1" Grid.Row="2"/>
-            <UserControls:WorkoutButton Grid.RowSpan="2" Grid.Row="2" ButtonClick="WorkoutButton_ButtonClick"/>
+            <UserControls:FriendsButton Grid.Column="1" Grid.Row="2" ButtonClick="FriendsButton_ButtonClick"/>
+            <UserControls:WorkoutButton x:Name="workoutButton" Grid.RowSpan="2" Grid.Row="2"/>
+            <UserControls:LeaderboardButton Grid.Column="1" Grid.Row="3" />
         </Grid>
     </Grid>
 

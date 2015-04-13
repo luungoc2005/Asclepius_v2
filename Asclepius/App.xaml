@@ -57,8 +57,7 @@
             <Setter Property="BorderBrush" Value="{StaticResource ButtonBorderBrush}" />
             <Setter Property="BorderThickness" Value="{StaticResource PhoneBorderThickness}"/>
         </Style>
-        
-        
+                
         <Style TargetType="Button">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderBrush" Value="{StaticResource ButtonBorderBrush}"/>
@@ -844,9 +843,9 @@
                                 </VisualStateGroup>
                             </VisualStateManager.VisualStateGroups>
                             <StackPanel x:Name="border" Orientation="Vertical">
-                                <TextBlock Text="{Binding StartDate,Converter={StaticResource DateTimeToTimeStringConverter}}" Margin="0,8" FontWeight="SemiBold" />
-                                <TextBlock Text="{Binding ActivityDescription}" Margin="0,8" />
-                                <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding StartDate,Converter={StaticResource DateTimeToTimeStringConverter}}" Margin="12,8,0,8" FontWeight="SemiBold" />
+                                <TextBlock Text="{Binding ActivityDescription}" Margin="12,8,0,8" />
+                                <StackPanel Orientation="Horizontal" Margin="12,0,0,0">
                                     <TextBlock Text="Duration:" Foreground="{StaticResource TextSpecialForeground2}" />
                                     <TextBlock Text="{Binding Duration,Converter={StaticResource TimeToStringConverter}}" Foreground="{StaticResource TextSpecialForeground2}" Margin="8,0,0,0" />
                                 </StackPanel>
@@ -859,7 +858,6 @@
         <DataTemplate x:Key="ToggleSwitchHeaderTemplate">
                 <ContentControl Content="{Binding}" Foreground="{StaticResource PhoneTextBoxForegroundBrush}"/>
         </DataTemplate>
-
 
         <Style TargetType="ProgressBar" x:Key="CircularProgressBarStyle">
             <Setter Property="Template">

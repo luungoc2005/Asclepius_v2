@@ -91,7 +91,13 @@ namespace Asclepius.AppPages.Models
 
         public bool IsPreviousAvailable()
         {
-            return SelectedUser.FindRecord(DateTime.Now - TimeSpan.FromDays(SelectedDay + 1),true) != null;
+            //return SelectedUser.FindRecord(DateTime.Now - TimeSpan.FromDays(SelectedDay + 1),true) != null;
+            DateTime _date = DateTime.Now - TimeSpan.FromDays(SelectedDay + 1);
+            foreach (DailyRecord r in SelectedUser.DailyRecords)
+            {
+                if (r.Date <= _date) return true;
+            }
+            return false;
         }
 
         private void UpdateData()
@@ -113,14 +119,23 @@ namespace Asclepius.AppPages.Models
                     for (int i = 0; i < 24; i++)
                     {
                         var hrec = record.GetHourlyRecord(i, true);
-                        int walking = (hrec == null ? 0 : _counter.GetWalkingCalorieBurn(hrec));
+                        int walking = (hrec == null || hrec.ActivityType != 0 ? 0 : _counter.GetWalkingCalorieBurn(hrec));
                         int hourly = (hrec == null ? ((startDate.Date==DateTime.Now.Date && i > date.Hour) ? 0 : _counter.CalcHourlyBMR(startDate)) : _counter.AdjustedBMR(hrec));
-                        areaChartData[i].value2 = hourly + walking;
+
+                        areaChartData[i].value2 += hourly + walking;
 
                         _walkingCalories += walking;
                         _passiveCalories += hourly;
 
                         startDate += TimeSpan.FromHours(1);
+                    }
+
+                    foreach (Record hrec in tempList)
+                    {
+                        int activity = (hrec == null || hrec.ActivityType == 0 ? 0 : (int)((double)_counter.RawBMR() * 1.157407407407407e-5 * (double)hrec.WalkTime
+                        * hrec.RealActivity.metaEquivalent)); //BMR per second
+                        areaChartData[hrec.StartDate.Hour].value2 += activity;
+                        _walkingCalories += activity;
                     }
                 }
             }
